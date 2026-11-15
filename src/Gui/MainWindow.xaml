@@ -1,0 +1,440 @@
+<Window x:Class="Ets2Rumble.Gui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="ETS2 Rumble"
+        Width="1120" Height="740" MinWidth="980" MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="#FF0B0E12"
+        Foreground="{StaticResource b.text}"
+        FontFamily="Segoe UI, Microsoft YaHei UI"
+        TextOptions.TextFormattingMode="Display"
+        UseLayoutRounding="True">
+
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="6"
+                            GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="34" />
+        </Grid.RowDefinitions>
+
+        <!-- 顶部栏 -->
+        <Grid Grid.Row="0" Background="#FF10151B" MouseLeftButtonDown="Header_MouseLeftButtonDown">
+            <Border BorderBrush="{StaticResource b.stroke}" BorderThickness="0,0,0,1" />
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="22,0,0,0">
+                <Border Width="30" Height="30" CornerRadius="9"
+                        Background="{StaticResource b.accent.dim}"
+                        BorderBrush="{StaticResource b.accent}" BorderThickness="1">
+                    <TextBlock Text="R" FontSize="15" FontWeight="Bold"
+                               Foreground="{StaticResource b.accent}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="ETS2 RUMBLE" FontSize="13.5" FontWeight="Bold" />
+                    <TextBlock Text="{DynamicResource app.subtitle}" FontSize="10.5"
+                               Foreground="{StaticResource b.muted}" Margin="0,1,0,0" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                <Border Background="{StaticResource b.surface}" BorderBrush="{StaticResource b.stroke}"
+                        BorderThickness="1" CornerRadius="12" Padding="10,5" Margin="0,0,12,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{StaticResource b.muted}"
+                                 VerticalAlignment="Center" />
+                        <TextBlock x:Name="StatusText" Text="{DynamicResource status.connecting}"
+                                   FontSize="11.5" Margin="7,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource b.surface}" BorderBrush="{StaticResource b.stroke}"
+                        BorderThickness="1" CornerRadius="10" Padding="3">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="LangZh" Content="中文" Style="{StaticResource LangButton}" Click="LangZh_Click" />
+                        <Button x:Name="LangEn" Content="EN" Style="{StaticResource LangButton}" Click="LangEn_Click" />
+                    </StackPanel>
+                </Border>
+
+                <Button x:Name="MinBtn" Content="—" Style="{StaticResource ChromeButton}" Click="Min_Click" Margin="10,0,0,0" />
+                <Button x:Name="CloseBtn" Content="✕" Style="{StaticResource ChromeButton}" Click="Close_Click" />
+            </StackPanel>
+        </Grid>
+
+        <!-- 内容 -->
+        <Grid Grid.Row="1" Margin="20,14,20,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="396" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 左：事件与开关 -->
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled" Padding="0,0,8,0">
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource section.events}" Style="{StaticResource SectionLabel}" />
+
+                    <!-- 换挡 -->
+                    <Border Style="{StaticResource Card}" Margin="0,8,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource shift.title}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{DynamicResource shift.desc}" Style="{StaticResource CardDesc}" Margin="0,2,0,0" />
+                                </StackPanel>
+                                <ToggleButton x:Name="ShiftEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                              VerticalAlignment="Top" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                            </Grid>
+
+                            <Grid Margin="0,14,0,0">
+                                <TextBlock Text="{DynamicResource common.strength}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="ShiftStrengthText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="35%" />
+                            </Grid>
+                            <Slider x:Name="ShiftStrength" Style="{StaticResource SlimSlider}" Minimum="0" Maximum="1"
+                                    SmallChange="0.01" LargeChange="0.05" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource common.duration}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="ShiftDurationText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="120 ms" />
+                            </Grid>
+                            <Slider x:Name="ShiftDuration" Style="{StaticResource SlimSlider}" Minimum="40" Maximum="400"
+                                    SmallChange="5" LargeChange="20" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource shift.threshold}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="ShiftSpeedText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="8 km/h" />
+                            </Grid>
+                            <Slider x:Name="ShiftSpeed" Style="{StaticResource SlimSlider}" Minimum="0" Maximum="60"
+                                    SmallChange="1" LargeChange="5" ValueChanged="Slider_Changed" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 急刹 -->
+                    <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource brake.title}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{DynamicResource brake.desc}" Style="{StaticResource CardDesc}" Margin="0,2,0,0" />
+                                </StackPanel>
+                                <ToggleButton x:Name="BrakeEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                              VerticalAlignment="Top" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                            </Grid>
+
+                            <Grid Margin="0,14,0,0">
+                                <TextBlock Text="{DynamicResource common.strength}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="BrakeStrengthText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="60%" />
+                            </Grid>
+                            <Slider x:Name="BrakeStrength" Style="{StaticResource SlimSlider}" Minimum="0" Maximum="1"
+                                    SmallChange="0.01" LargeChange="0.05" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource common.duration}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="BrakeDurationText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="220 ms" />
+                            </Grid>
+                            <Slider x:Name="BrakeDuration" Style="{StaticResource SlimSlider}" Minimum="60" Maximum="800"
+                                    SmallChange="10" LargeChange="40" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource brake.threshold}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="BrakePedalText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="85%" />
+                            </Grid>
+                            <Slider x:Name="BrakePedal" Style="{StaticResource SlimSlider}" Minimum="0.2" Maximum="1"
+                                    SmallChange="0.01" LargeChange="0.05" ValueChanged="Slider_Changed" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 颠簸 -->
+                    <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource bump.title}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{DynamicResource bump.desc}" Style="{StaticResource CardDesc}" Margin="0,2,0,0" />
+                                </StackPanel>
+                                <ToggleButton x:Name="BumpEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                              VerticalAlignment="Top" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                            </Grid>
+
+                            <Grid Margin="0,14,0,0">
+                                <TextBlock Text="{DynamicResource common.strength}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="BumpStrengthText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="80%" />
+                            </Grid>
+                            <Slider x:Name="BumpStrength" Style="{StaticResource SlimSlider}" Minimum="0" Maximum="1"
+                                    SmallChange="0.01" LargeChange="0.05" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource common.duration}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="BumpDurationText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="260 ms" />
+                            </Grid>
+                            <Slider x:Name="BumpDuration" Style="{StaticResource SlimSlider}" Minimum="60" Maximum="800"
+                                    SmallChange="10" LargeChange="40" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource bump.threshold}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="BumpThresholdText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="4.0 m/s²" />
+                            </Grid>
+                            <Slider x:Name="BumpThreshold" Style="{StaticResource SlimSlider}" Minimum="1" Maximum="15"
+                                    SmallChange="0.1" LargeChange="0.5" ValueChanged="Slider_Changed" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 小部件开关 -->
+                    <TextBlock Text="{DynamicResource section.switches}" Style="{StaticResource SectionLabel}" Margin="2,20,0,0" />
+
+                    <Border Style="{StaticResource Card}" Margin="0,8,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{DynamicResource sw.common}" Style="{StaticResource CardTitle}" VerticalAlignment="Center" />
+                                <ToggleButton x:Name="SwEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                              Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                            </Grid>
+
+                            <Grid Margin="0,14,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                    <ToggleButton x:Name="SwBlinkers" Style="{StaticResource Switch}" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                                    <TextBlock Text="{DynamicResource sw.blinkers}" Style="{StaticResource RowLabel}" Margin="10,0,0,0" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,10">
+                                    <ToggleButton x:Name="SwWipers" Style="{StaticResource Switch}" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                                    <TextBlock Text="{DynamicResource sw.wipers}" Style="{StaticResource RowLabel}" Margin="10,0,0,0" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                    <ToggleButton x:Name="SwHeadlights" Style="{StaticResource Switch}" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                                    <TextBlock Text="{DynamicResource sw.headlights}" Style="{StaticResource RowLabel}" Margin="10,0,0,0" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,10">
+                                    <ToggleButton x:Name="SwHighBeam" Style="{StaticResource Switch}" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                                    <TextBlock Text="{DynamicResource sw.highbeam}" Style="{StaticResource RowLabel}" Margin="10,0,0,0" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                                    <ToggleButton x:Name="SwHazard" Style="{StaticResource Switch}" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                                    <TextBlock Text="{DynamicResource sw.hazard}" Style="{StaticResource RowLabel}" Margin="10,0,0,0" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,8,0,0">
+                                <TextBlock Text="{DynamicResource common.strength}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="SwStrengthText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="30%" />
+                            </Grid>
+                            <Slider x:Name="SwStrength" Style="{StaticResource SlimSlider}" Minimum="0" Maximum="1"
+                                    SmallChange="0.01" LargeChange="0.05" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource common.duration}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="SwDurationText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="150 ms" />
+                            </Grid>
+                            <Slider x:Name="SwDuration" Style="{StaticResource SlimSlider}" Minimum="40" Maximum="500"
+                                    SmallChange="5" LargeChange="20" ValueChanged="Slider_Changed" />
+
+                            <Border BorderBrush="{StaticResource b.stroke}" BorderThickness="0,1,0,0" Margin="0,16,0,4" />
+
+                            <Grid Margin="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{DynamicResource sw.handbrake}" Style="{StaticResource CardTitle}" VerticalAlignment="Center" />
+                                <ToggleButton x:Name="HbEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                              Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                            </Grid>
+
+                            <Grid Margin="0,12,0,0">
+                                <TextBlock Text="{DynamicResource common.strength}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="HbStrengthText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="45%" />
+                            </Grid>
+                            <Slider x:Name="HbStrength" Style="{StaticResource SlimSlider}" Minimum="0" Maximum="1"
+                                    SmallChange="0.01" LargeChange="0.05" ValueChanged="Slider_Changed" />
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource common.duration}" Style="{StaticResource RowLabel}" />
+                                <TextBlock x:Name="HbDurationText" Style="{StaticResource ValueText}" HorizontalAlignment="Right" Text="600 ms" />
+                            </Grid>
+                            <Slider x:Name="HbDuration" Style="{StaticResource SlimSlider}" Minimum="100" Maximum="1500"
+                                    SmallChange="10" LargeChange="50" ValueChanged="Slider_Changed" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- 右：状态 / 选项 / 日志 -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource section.status}" Style="{StaticResource SectionLabel}" />
+
+                        <Grid Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="74" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{DynamicResource status.source}" Style="{StaticResource RowLabel}" />
+                            <TextBlock x:Name="SrcText" Grid.Column="1" Style="{StaticResource StatValue}" Text="—" />
+
+                            <TextBlock Grid.Row="1" Text="{DynamicResource status.output}" Style="{StaticResource RowLabel}" Margin="0,6,0,0" />
+                            <TextBlock x:Name="OutText" Grid.Row="1" Grid.Column="1" Style="{StaticResource StatValue}" Text="—" Margin="0,6,0,0" />
+
+                            <TextBlock Grid.Row="2" Text="{DynamicResource status.frame}" Style="{StaticResource RowLabel}" Margin="0,6,0,0" />
+                            <TextBlock x:Name="StatText" Grid.Row="2" Grid.Column="1" Style="{StaticResource StatValue}" Text="—" Margin="0,6,0,0" />
+                        </Grid>
+
+                        <Grid Margin="0,14,0,0">
+                            <TextBlock Text="{DynamicResource status.level}" Style="{StaticResource RowLabel}" />
+                        </Grid>
+                        <Border x:Name="LevelBar" Height="6" CornerRadius="3" Background="{StaticResource b.surface2}" Margin="0,6,0,0">
+                            <Border x:Name="LevelFill" Width="0" HorizontalAlignment="Left" CornerRadius="3"
+                                    Background="{StaticResource b.accent}" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,12,0,0" Padding="16,14">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource opt.master}" Style="{StaticResource CardTitle}" FontSize="12.5" />
+                                <TextBlock Text="{DynamicResource opt.master.desc}" Style="{StaticResource CardDesc}" Margin="0,2,10,0" />
+                            </StackPanel>
+                            <ToggleButton x:Name="MasterEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                          VerticalAlignment="Center" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                        </Grid>
+
+                        <Grid Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource opt.dryrun}" Style="{StaticResource CardTitle}" FontSize="12.5" />
+                                <TextBlock Text="{DynamicResource opt.dryrun.desc}" Style="{StaticResource CardDesc}" Margin="0,2,10,0" />
+                            </StackPanel>
+                            <ToggleButton x:Name="DryRunEnabled" Grid.Column="1" Style="{StaticResource Switch}"
+                                          VerticalAlignment="Center" Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,12,0,0" Padding="16,14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{DynamicResource log.title}" Style="{StaticResource CardTitle}" FontSize="12.5" VerticalAlignment="Center" />
+                            <TextBlock x:Name="LogCount" Grid.Column="1" Text="{DynamicResource log.count}"
+                                       Style="{StaticResource RowLabel}" Margin="10,0,0,0" />
+                            <Button Grid.Column="2" Content="{DynamicResource log.clear}" Style="{StaticResource GhostButton}" Click="LogClear_Click" />
+                        </Grid>
+
+                        <Border Grid.Row="1" Background="{StaticResource b.log.bg}" CornerRadius="10"
+                                BorderBrush="{StaticResource b.stroke}" BorderThickness="1" Margin="0,10,0,0">
+                            <ScrollViewer x:Name="LogScroll" VerticalScrollBarVisibility="Auto" Padding="10,8,12,8">
+                                <StackPanel>
+                                    <TextBlock x:Name="LogEmpty" Text="{DynamicResource log.empty}"
+                                               Style="{StaticResource CardDesc}" Margin="2,6,2,6" />
+                                    <ItemsControl x:Name="LogList">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,1.5,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Time}" FontFamily="Consolas" FontSize="10.5"
+                                                               Foreground="{StaticResource b.log.debug}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding Level}" FontFamily="Consolas" FontSize="10.5"
+                                                               Foreground="{Binding LevelBrush}" Margin="8,0,8,0" />
+                                                    <TextBlock Grid.Column="2" Text="{Binding Message}" FontFamily="Consolas" FontSize="10.5"
+                                                               Foreground="{Binding Brush}" TextWrapping="Wrap" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- 底栏 -->
+        <Grid Grid.Row="2" Background="#FF10151B">
+            <Border BorderBrush="{StaticResource b.stroke}" BorderThickness="0,1,0,0" />
+            <Grid Margin="22,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{DynamicResource foot.config}" FontSize="10.5" Foreground="{StaticResource b.muted}" />
+                    <TextBlock x:Name="ConfigPathText" FontSize="10.5" Foreground="{StaticResource b.muted}"
+                               FontFamily="Consolas" Margin="8,0,0,0" />
+                </StackPanel>
+                <TextBlock x:Name="SaveStateText" Grid.Column="1" Text="{DynamicResource foot.hint}"
+                           FontSize="10.5" Foreground="{StaticResource b.muted}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" MaxWidth="420" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

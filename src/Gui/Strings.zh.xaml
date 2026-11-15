@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <sys:String x:Key="app.subtitle">ETS2 手柄震动增强 · XInput</sys:String>
+
+    <sys:String x:Key="status.connecting">正在启动</sys:String>
+    <sys:String x:Key="status.connected">已在驾驶中</sys:String>
+    <sys:String x:Key="status.waiting">等待游戏数据</sys:String>
+    <sys:String x:Key="status.paused">游戏已暂停</sys:String>
+
+    <sys:String x:Key="section.events">驾驶事件</sys:String>
+    <sys:String x:Key="section.switches">小部件开关</sys:String>
+    <sys:String x:Key="section.status">运行状态</sys:String>
+    <sys:String x:Key="section.log">运行日志</sys:String>
+
+    <sys:String x:Key="shift.title">换挡冲击</sys:String>
+    <sys:String x:Key="shift.desc">挡位变化且车速高于阈值时触发</sys:String>
+    <sys:String x:Key="shift.threshold">最低车速</sys:String>
+
+    <sys:String x:Key="brake.title">急刹</sys:String>
+    <sys:String x:Key="brake.desc">刹车踏板踩过阈值并持续一小段时间时触发</sys:String>
+    <sys:String x:Key="brake.threshold">踏板阈值</sys:String>
+
+    <sys:String x:Key="bump.title">碰撞 / 大颠簸</sys:String>
+    <sys:String x:Key="bump.desc">车身加速度突变超过阈值时触发</sys:String>
+    <sys:String x:Key="bump.threshold">加速度阈值</sys:String>
+
+    <sys:String x:Key="common.strength">震动强度</sys:String>
+    <sys:String x:Key="common.duration">持续时长</sys:String>
+
+    <sys:String x:Key="sw.blinkers">转向灯</sys:String>
+    <sys:String x:Key="sw.wipers">雨刮</sys:String>
+    <sys:String x:Key="sw.headlights">大灯（近光）</sys:String>
+    <sys:String x:Key="sw.highbeam">远近光切换</sys:String>
+    <sys:String x:Key="sw.hazard">双闪</sys:String>
+    <sys:String x:Key="sw.common">开关震动</sys:String>
+    <sys:String x:Key="sw.handbrake">手刹</sys:String>
+
+    <sys:String x:Key="opt.master">震动总开关</sys:String>
+    <sys:String x:Key="opt.master.desc">关闭后不再驱动手柄，遥测与日志照常</sys:String>
+    <sys:String x:Key="opt.dryrun">静音测试</sys:String>
+    <sys:String x:Key="opt.dryrun.desc">只记录事件，不实际震动，适合安全调阈值</sys:String>
+
+    <sys:String x:Key="status.source">数据源</sys:String>
+    <sys:String x:Key="status.output">输出</sys:String>
+    <sys:String x:Key="source.shm">SCS 共享内存</sys:String>
+    <sys:String x:Key="source.sim">模拟数据源（--sim）</sys:String>
+    <sys:String x:Key="output.none">XInput 未连接</sys:String>
+    <sys:String x:Key="status.frame">实时</sys:String>
+    <sys:String x:Key="status.level">当前输出</sys:String>
+
+    <sys:String x:Key="log.title">运行日志</sys:String>
+    <sys:String x:Key="log.count">最近 100 条</sys:String>
+    <sys:String x:Key="log.clear">清空</sys:String>
+    <sys:String x:Key="log.empty">暂无日志。程序已在后台运行，进入游戏驾驶后这里会显示事件。</sys:String>
+
+    <sys:String x:Key="unit.kph">km/h</sys:String>
+    <sys:String x:Key="unit.gear">挡</sys:String>
+    <sys:String x:Key="unit.ms">ms</sys:String>
+    <sys:String x:Key="unit.mps2">m/s²</sys:String>
+
+    <sys:String x:Key="foot.config">配置文件</sys:String>
+    <sys:String x:Key="foot.saving">正在保存…</sys:String>
+    <sys:String x:Key="foot.saved">改动已保存并生效</sys:String>
+    <sys:String x:Key="foot.hint">Steam Input 需关闭（Steam 设置 → 控制器）</sys:String>
+
+</ResourceDictionary>

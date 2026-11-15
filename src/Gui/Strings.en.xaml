@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <sys:String x:Key="app.subtitle">ETS2 rumble enhancer · XInput</sys:String>
+
+    <sys:String x:Key="status.connecting">Starting</sys:String>
+    <sys:String x:Key="status.connected">Driving</sys:String>
+    <sys:String x:Key="status.waiting">Waiting for telemetry</sys:String>
+    <sys:String x:Key="status.paused">Game paused</sys:String>
+
+    <sys:String x:Key="section.events">DRIVING EVENTS</sys:String>
+    <sys:String x:Key="section.switches">SWITCHES</sys:String>
+    <sys:String x:Key="section.status">STATUS</sys:String>
+    <sys:String x:Key="section.log">LIVE LOG</sys:String>
+
+    <sys:String x:Key="shift.title">Gear shift</sys:String>
+    <sys:String x:Key="shift.desc">Fires when the gear changes above the speed threshold</sys:String>
+    <sys:String x:Key="shift.threshold">Min speed</sys:String>
+
+    <sys:String x:Key="brake.title">Hard braking</sys:String>
+    <sys:String x:Key="brake.desc">Fires when the brake pedal passes the threshold for a moment</sys:String>
+    <sys:String x:Key="brake.threshold">Pedal threshold</sys:String>
+
+    <sys:String x:Key="bump.title">Impact / big bump</sys:String>
+    <sys:String x:Key="bump.desc">Fires when body acceleration spikes past the threshold</sys:String>
+    <sys:String x:Key="bump.threshold">Accel threshold</sys:String>
+
+    <sys:String x:Key="common.strength">Strength</sys:String>
+    <sys:String x:Key="common.duration">Duration</sys:String>
+
+    <sys:String x:Key="sw.blinkers">Turn signals</sys:String>
+    <sys:String x:Key="sw.wipers">Wipers</sys:String>
+    <sys:String x:Key="sw.headlights">Headlights (low)</sys:String>
+    <sys:String x:Key="sw.highbeam">High beam</sys:String>
+    <sys:String x:Key="sw.hazard">Hazard lights</sys:String>
+    <sys:String x:Key="sw.common">Switch rumble</sys:String>
+    <sys:String x:Key="sw.handbrake">Parking brake</sys:String>
+
+    <sys:String x:Key="opt.master">Master switch</sys:String>
+    <sys:String x:Key="opt.master.desc">When off, the pad is never driven; telemetry and log keep running</sys:String>
+    <sys:String x:Key="opt.dryrun">Silent test</sys:String>
+    <sys:String x:Key="opt.dryrun.desc">Log events without vibrating, safe for tuning thresholds</sys:String>
+
+    <sys:String x:Key="status.source">Source</sys:String>
+    <sys:String x:Key="status.output">Output</sys:String>
+    <sys:String x:Key="source.shm">SCS shared memory</sys:String>
+    <sys:String x:Key="source.sim">Simulated (--sim)</sys:String>
+    <sys:String x:Key="output.none">XInput not connected</sys:String>
+    <sys:String x:Key="status.frame">Live</sys:String>
+    <sys:String x:Key="status.level">Current output</sys:String>
+
+    <sys:String x:Key="log.title">Live log</sys:String>
+    <sys:String x:Key="log.count">last 100 lines</sys:String>
+    <sys:String x:Key="log.clear">Clear</sys:String>
+    <sys:String x:Key="log.empty">No log yet. The engine is running; events appear here while driving.</sys:String>
+
+    <sys:String x:Key="unit.kph">km/h</sys:String>
+    <sys:String x:Key="unit.gear">gear</sys:String>
+    <sys:String x:Key="unit.ms">ms</sys:String>
+    <sys:String x:Key="unit.mps2">m/s²</sys:String>
+
+    <sys:String x:Key="foot.config">Config</sys:String>
+    <sys:String x:Key="foot.saving">Saving…</sys:String>
+    <sys:String x:Key="foot.saved">Saved and applied</sys:String>
+    <sys:String x:Key="foot.hint">Disable Steam Input (Steam → Settings → Controller)</sys:String>
+
+</ResourceDictionary>

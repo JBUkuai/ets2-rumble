@@ -1,0 +1,61 @@
+{
+  "source": "shm",
+  "loop": {
+    "pollHz": 30,
+    "staleTimeoutMs": 1000
+  },
+  "shift": {
+    "enabled": true,
+    "minSpeedKph": 8,
+    "strength": 0.35,
+    "durationMs": 120,
+    "cooldownMs": 250
+  },
+  "brake": {
+    "enabled": true,
+    "pedalThreshold": 0.85,
+    "decelThresholdMps2": 4.0,
+    "holdMs": 80,
+    "strength": 0.6,
+    "durationMs": 220,
+    "cooldownMs": 600
+  },
+  "bump": {
+    "enabled": true,
+    "thresholdMps2": 4.0,
+    "cargoDamageDelta": 0.005,
+    "minSpeedKph": 5,
+    "strength": 0.8,
+    "durationMs": 260,
+    "cooldownMs": 700
+  },
+  "switches": {
+    "enabled": true,
+    "blinkers": true,
+    "wipers": true,
+    "headlights": true,
+    "highBeam": true,
+    "hazardLights": true,
+    "strength": 0.3,
+    "durationMs": 150,
+    "parkingBrake": true,
+    "parkingBrakeStrength": 0.45,
+    "parkingBrakeDurationMs": 600
+  },
+  "output": {
+    "enabled": true,
+    "controllerIndex": -1,
+    "leftGain": 1.0,
+    "rightGain": 1.0,
+    "dryRun": false
+  },
+  "log": {
+    "enabled": true,
+    "path": "logs/rumble.log",
+    "verbose": false,
+    "telemetrySampleMs": 0
+  },
+  "ui": {
+    "language": "zh"
+  }
+}
